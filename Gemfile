@@ -36,3 +36,13 @@ gem 'jquery-rails'
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
+
+gem "pg", ">= 0.14.0"
+gem "rspec-rails", ">= 2.11.0", :group => [:development, :test]
+gem "capybara", ">= 1.1.2", :group => :test
+gem "factory_girl_rails", ">= 3.5.0", :group => [:development, :test]
+gem "twitter-bootstrap-rails", ">= 2.0.3", :group => :assets
+gem "therubyracer", :group => :assets, :platform => :ruby
+gem "omniauth", ">= 1.1.0"
+gem "omniauth-facebook"
+gem "rspec"
