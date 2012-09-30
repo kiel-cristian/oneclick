@@ -25,11 +25,35 @@ class UsersController < ApplicationController
   # GET /users/new.json
   def new
     @user = User.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @user }
+    
+    if(params[:email].presence and params[:name].presence and params[:password].presence and params[:password2].presence)
+      if params[:password2] != params[:password]
+        @errors = 'Passwords suministradas no coinciden'
+      else
+        @user = User.new(name: params[:name],password: params[:password],email: params[:email])
+        respond_to do |format|
+          if @user.save
+            format.html { redirect_to @user, notice: 'User was successfully created.' }
+            format.json { render json: @user, status: :created, location: @user }
+          else
+            format.html { render action: "new" }
+            format.json { render json: @user.errors, status: :unprocessable_entity }
+          end
+        end
+      end
+    else
+      @errors = 'Faltan parametros por definir'
+      # respond_to do |format|
+      #   format.html
+      #   format.json {render json: {errors: 'Faltan parámetros por definir'}}
+      # end
     end
+    # @user = User.new
+
+    # respond_to do |format|
+    #   format.html # new.html.erb
+    #   format.json { render json: @user }
+    # end
   end
 
   # GET /users/1/edit
@@ -40,16 +64,27 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    @user = User.new(params[:user])
-
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
-        format.json { render json: @user, status: :created, location: @user }
+    if(params[:email].presence and params[:name].presence and params[:password].presence and params[:password2].presence)
+      if params[:password2] != params[:password]
+        @errors = 'Passwords suministradas no coinciden'
       else
-        format.html { render action: "new" }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        @user = User.new(name: params[:name],password: params[:password],email: params[:email])
+        respond_to do |format|
+          if @user.save
+            format.html { redirect_to @user, notice: 'User was successfully created.' }
+            format.json { render json: @user, status: :created, location: @user }
+          else
+            format.html { render action: "new" }
+            format.json { render json: @user.errors, status: :unprocessable_entity }
+          end
+        end
       end
+    else
+      @errors = 'Faltan parametros por definir'
+      # respond_to do |format|
+      #   format.html
+      #   format.json {render json: {errors: 'Faltan parámetros por definir'}}
+      # end
     end
   end
 
