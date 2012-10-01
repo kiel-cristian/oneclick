@@ -1,18 +1,32 @@
 class BookmarksController < ApplicationController
+	def index
+		redirect_to action: 'list'
+	end
 	def list
 		@bookmarks = Bookmark.all
 	end
 
 	def new
 		@bookmark = Bookmark.new
+		@categories = Category.all
 	end
 
 	def create
-		@bookmark = Bookmark.new(url: params[:url],category: params[:category],security: 0,popularity: 0)
-		if @bookmark.save
-			redirect_to action: 'list'
-		else
-			redirect_to action: 'new'
+		puts params.inspect
+
+  		if params[:bookmark][:url].blank? or params[:bookmarks][:categories_id].blank?
+  			@errors = "Debe escribir una URL y seleccionar una categoria."
+  			# redirect_to action: 'new'
+  			@categories = Category.all
+
+  			render action: 'new'
+  		else
+			@bookmark = Bookmark.new(url: params[:bookmark][:url],category: params[:bookmarks][:categories_id],security: 0,popularity: 0)
+			if @bookmark.save
+				redirect_to action: 'list'
+			else
+				redirect_to action: 'new'
+			end
 		end
 	end
 	

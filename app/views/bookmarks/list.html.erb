@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<% if @bookmarks.blank? %>
+<p>There are not any bookmarks currently in the system.</p>
+<% else %>
+<p>These are the current bookmarks in our system</p>
+<ul id="bookmarks">
+<% @bookmarks.each do |c| %>
+<li><%= link_to c.url, {action: 'show', id: c.id} -%></li>
+<% end %>
+</ul>
+<% end %>
+<p><%= link_to "Add new Bookmark", {action: 'new' }%></p>
+
+</body>
+</html>

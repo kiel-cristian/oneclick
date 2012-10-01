@@ -1,6 +1,6 @@
 Oneclick::Application.routes.draw do
 
-  root to: 'bookmarks#index'
+  root to: 'bookmarks#list'
 
   resources :users
   resources :bookmarks
