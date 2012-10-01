@@ -1,8 +1,11 @@
 Oneclick::Application.routes.draw do
-  resources :bookmarks
-  resources :users
 
-  root :to => 'bookmarks#index'
+  root to: 'bookmarks#index'
+
+  resources :users
+  resources :bookmarks
+  resources :users_bookmarks
+  
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
