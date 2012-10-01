@@ -4,26 +4,29 @@
 	<title></title>
 </head>
 <body>
+<div id="container">
+	<h2>Add new bookmark</h2>
+	<%= form_tag :action => 'create' do%>
+		<p><label for="bookmark_url">URL</label>:
+		<%= text_field 'bookmark', 'url' %></p>
+		<p><label for="bookmark_category">Category</label>:
+		<%= collection_select(:bookmarks,:categories_id,@categories,:id,:name) %></p>
 
-<h1>Add new bookmark</h1>
-<%= form_tag :action => 'create' %>
-<p><label for="bookmark_url">URL</label>:
-<%= text_field 'bookmark', 'url' %></p>
-<p><label for="bookmark_category">Category</label>:
-<%= collection_select(:bookmarks,:categories_id,@categories,:id,:name) %></p>
-
-<%= submit_tag "Create" %>
-</form>
-<p class="errors">
-	<%if @errors.presence %>
-		<%=@errors%>
+		<%= submit_tag "Create" %>
+		
 	<%end %>
 
-	<%= puts @errors.inspect if @errors.presence%>
-</p>
+	<%= button_tag 'Back', {onclick: 'window.history.go(-1);',name: 'back',type: 'submit'} %>
 
-<%= link_to 'Back', {:action => 'list'} %>
+	<p class="errors">
+		<%if @errors.presence %>
+			<%=@errors%>
+		<%end %>
 
+		<%= puts @errors.inspect if @errors.presence%>
+	</p>
+
+</div>
 
 </body>
 </html>
