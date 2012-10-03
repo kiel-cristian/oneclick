@@ -1,25 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-</head>
-<body>
-	<div id="container">
-		<% if @bookmarks.blank? %>
-		<p><h2>Actualmente no hay bookmarks en el sistema</h2></p>
-		<% else %>
-		<p><h2>Estos son los bookmarks actuales del sistema</h2></p>
-		<ul id="bookmarks">
-		<% @bookmarks.each do |c| %>
+
+<% if @bookmarks.blank? %>
+	<p><h2>Actualmente no hay bookmarks en el sistema</h2></p>
+<% else %>
+	<p><h2>Estos son los bookmarks actuales del sistema</h2></p>
+	<ul id="bookmarks">
+	<% @bookmarks.each do |c| %>
 		<li><%= link_to c.url, {action: 'show', id: c.id} -%></li>
-		<% end %>
-		</ul>
-		<% end %>
-		<p>
-			<%= button_tag "Agregar Bookmark", {type: 'submit',onclick: "window.location='/bookmarks/new'" }%>
-
-		</p>
-	</div>
-
-</body>
-</html>
+	<% end %>
+	</ul>
+<% end %>
+<p>
+	<%= button_tag "Agregar Bookmark", {type: 'submit',onclick: "window.location='/bookmarks/new'" }%>
+</p>

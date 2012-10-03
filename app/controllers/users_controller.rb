@@ -1,103 +1,93 @@
-# class UsersController < ApplicationController
-	# def new
-	# 	@user = User.new
-	# end
-
-	# def list
-	# 	@users = User.all
-	# end
-
-	# def create
-	# 	@user = User.new(name: params[:name],email: params[:email],password: params[:password])
-	# 	if @user.save
-	# 		redirect_to action: 'list'
-	# 	else
-	# 		# render action: 'create'
-	# 	end
-	# end
-	
-	# def show
-	# 	@user = User.find(params[:id])
-	# end
-
-	# def edit
-	# 	@user = User.find(params[:id])
-	# end
-
-	# def update
-	# 	@user = User.find(params[:id])
-
-	# 	if @user.update_attributes(name: params[:name],email: params[:email],password: params[:password])
-	# 		redirect_to action: 'show', id: @user
-	# 	else
-	# 		render action: 'edit'
-	# 	end
-	# end
-
-	# def delete
-	# 	UserBookmark.where(users_id: params[:id]).destroy
-	# 	User.find(params[:id]).destroy
-	# 	redirect_to action: 'list'
-	# end
 class UsersController < ApplicationController
 
-  before_filter :login_required, :only=>['welcome', 'change_password', 'hidden']
+  before_filter :authenticate_user!, :only=>['index', 'change_password']
 
-  def signup
-    @user = User.new(@params[:user])
-    if request.post?  
-      if @user.save
-        session[:user] = User.authenticate(@user.login, @user.password)
-        flash[:message] = "Signup successful"
-        redirect_to :action => "welcome"          
-      else
-        flash[:warning] = "Signup unsuccessful"
-      end
-    end
-  end
+  #API
+  #'index'
+  # :sign_in => 'login',
+  # :sign_out => 'logout', 
+  # :password => 'secret', 
+  # :confirmation => 'confirm', 
+  # :unlock => 'unblock', 
+  # :registration => 'register', 
+  # :sign_up => 'signup'
 
-  def login
-    if request.post?
-      if session[:user] = User.authenticate(params[:user][:login], params[:user][:password])
-        flash[:message]  = "Login successful"
-        redirect_to_stored
-      else
-        flash[:warning] = "Login unsuccessful"
-      end
-    end
+  #HELPERS
+  # user_signed_in?
+  # current_user
+  # user_session
+
+  def index
+    p current_user
+    @user = User.find(current_user)
+    @bookmarks = UserBookmark.where(users_id: @user.id)
   end
 
-  def logout
-    session[:user] = nil
-    flash[:message] = 'Logged out'
-    redirect_to :action => 'login'
-  end
+  # def login
+  #   if params[:username].blank? and params[:password].blank?
+  #     @errors = "Ingrese nombre de usuario y password"
+  #     render action: :login
+  #   end
+  # end
 
-  def forgot_password
-    if request.post?
-      u= User.find_by_email(params[:user][:email])
-      if u and u.send_new_password
-        flash[:message]  = "A new password has been sent by email."
-        redirect_to :action=>'login'
-      else
-        flash[:warning]  = "Couldn't send password"
-      end
-    end
-  end
+  # def change_password
+  # end
 
-  def change_password
-    @user=session[:user]
-    if request.post?
-      @user.update_attributes(:password=>params[:user][:password], :password_confirmation => params[:user][:password_confirmation])
-      if @user.save
-        flash[:message]="Password Changed"
-      end
-    end
-  end
+  # def signup
+  #   @user = User.new(@params[:user])
+  #   if request.post?  
+  #     if @user.save
+  #       session[:user] = User.authenticate(@user.login, @user.password)
+  #       flash[:message] = "Signup successful"
+  #       redirect_to :action => "welcome"          
+  #     else
+  #       flash[:warning] = "Signup unsuccessful"
+  #     end
+  #   end
+  # end
 
-  def welcome
-  end
-  def hidden
-  end
+  # def login
+  #   if request.post?
+  #     if session[:user] = User.authenticate(params[:user][:login], params[:user][:password])
+  #       flash[:message]  = "Login successful"
+  #       redirect_to_stored
+  #     else
+  #       flash[:warning] = "Login unsuccessful"
+  #     end
+  #   end
+  # end
+
+  # def logout
+  #   session[:user] = nil
+  #   flash[:message] = 'Logged out'
+  #   redirect_to :action => 'login'
+  # end
+
+  # def forgot_password
+  #   if request.post?
+  #     u= User.find_by_email(params[:user][:email])
+  #     if u and u.send_new_password
+  #       flash[:message]  = "A new password has been sent by email."
+  #       redirect_to :action=>'login'
+  #     else
+  #       flash[:warning]  = "Couldn't send password"
+  #     end
+  #   end
+  # end
+
+  # def change_password
+  #   @user=session[:user]
+  #   if request.post?
+  #     @user.update_attributes(:password=>params[:user][:password], :password_confirmation => params[:user][:password_confirmation])
+  #     if @user.save
+  #       flash[:message]="Password Changed"
+  #     end
+  #   end
+  # end
+
+  # def welcome
+  # end
+  # def hidden
+  # end
+
 end
-# end

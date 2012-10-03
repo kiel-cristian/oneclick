@@ -2,6 +2,20 @@ Oneclick::Application.routes.draw do
 
   root to: 'bookmarks#list'
 
+  devise_for :users, :path => "users",
+                     :path_names => 
+                            {   :sign_in => 'login',
+                                :sign_out => 'logout', 
+                                :password => 'secret', 
+                                :confirmation => 'confirm', 
+                                :unlock => 'unblock', 
+                                :registration => 'register', 
+                                :sign_up => 'signup'
+                              }
+
+
+  devise_for :bookmarks
+
   resources :users
   resources :bookmarks
   resources :users_bookmarks

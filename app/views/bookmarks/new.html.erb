@@ -1,32 +1,20 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-</head>
-<body>
-<div id="container">
-	<h2>Add new bookmark</h2>
-	<%= form_tag :action => 'create' do%>
-		<p><label for="bookmark_url">URL</label>:
-		<%= text_field 'bookmark', 'url' %></p>
-		<p><label for="bookmark_category">Category</label>:
-		<%= collection_select(:bookmarks,:categories_id,@categories,:id,:name) %></p>
+<h2>Add new bookmark</h2>
+<%= form_tag :action => 'create' do%>
+	<p><label for="bookmark_url">URL</label>:
+	<%= text_field 'bookmark', 'url' %></p>
+	<p><label for="bookmark_category">Category</label>:
+	<%= collection_select(:bookmarks,:categories_id,@categories,:id,:name) %></p>
 
-		<%= submit_tag "Create" %>
-		
+	<%= submit_tag "Create" %>
+	
+<%end %>
+
+<%= button_tag 'Back', {onclick: 'window.history.go(-1);',name: 'back',type: 'submit'} %>
+
+<p class="errors">
+	<%if @errors.presence %>
+		<%=@errors%>
 	<%end %>
 
-	<%= button_tag 'Back', {onclick: 'window.history.go(-1);',name: 'back',type: 'submit'} %>
-
-	<p class="errors">
-		<%if @errors.presence %>
-			<%=@errors%>
-		<%end %>
-
-		<%= puts @errors.inspect if @errors.presence%>
-	</p>
-
-</div>
-
-</body>
-</html>
+	<%= puts @errors.inspect if @errors.presence%>
+</p>

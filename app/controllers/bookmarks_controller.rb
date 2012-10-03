@@ -1,4 +1,6 @@
 class BookmarksController < ApplicationController
+	before_filter :authenticate_user!, :only=>['create', 'edit' ,'update' ,'delete']
+
 	def index
 		redirect_to action: 'list'
 	end

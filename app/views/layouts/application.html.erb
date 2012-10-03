@@ -7,8 +7,16 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+<div id="container">
+	<%= render "devise/shared/links" %>
 
-<%= yield %>
+	<%= render "bookmarks/links" %>
+
+	<p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+
+	<%= yield %>
+</div>
 
 </body>
 </html>
