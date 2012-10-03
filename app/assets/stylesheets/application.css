@@ -38,19 +38,19 @@
 html, body {
 	padding-top: 20px;
 	margin:0 auto;
-	width: 100%;
+	width: auto;
 	/*height: 140% auto;*/
 	font-family: "Helvetica Neue", Helvetica, sans-serif;
 	color: #444;
 	-webkit-font-smoothing: antialiased;
 	background: #f0f0f0;
 	height: 800px;
-	
 }
 
 #container {
 	/*position: fixed;*/
 	width: 340px;
+	padding-right: 175px;
 	/*height: 280px;*/
 	/*height: auto;*/
 	height: auto;
@@ -115,6 +115,20 @@ html, body {
 	animation-timing-function: linear;
 }
 
+table{
+	padding-right: 10px;
+	margin-left: -14px;
+	width: 530px;
+
+}
+
+td{
+	font-size: 12px;
+	font-weight: bold;
+	font-style:  italic;
+	text-align: center;
+}
+
 
 form {
 	margin: 0 auto;
@@ -131,7 +145,8 @@ label {
 
 p a {
 	font-size: 11px;
-	color: #aaa;
+	/*color: #aaa;*/
+	color: #4ab1ff;
 	float: right;
 	margin-top: -13px;
 	margin-right: 20px;
@@ -140,8 +155,23 @@ p a {
 	transition: all .4s ease;
 }
 
-p a:hover {
-	color: #555;
+p.alert{
+	color: #ff1155;
+	font-weight: bold;
+	font-size: 20px;
+	font-style: italic;
+}
+
+a{
+	font-style: italic;
+}
+
+p a:hover, a:hover {
+	color: #ffc2a3;
+}
+
+a:visited{
+	color: #6ec2e8;
 }
 
 input {

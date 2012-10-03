@@ -3,12 +3,27 @@
 	<p><h2>Actualmente no hay bookmarks en el sistema</h2></p>
 <% else %>
 	<p><h2>Estos son los bookmarks actuales del sistema</h2></p>
-	<ul id="bookmarks">
+	<table id="bookmarks">
+
+	<tr>
+		<td><%= 'URL' %></td>
+		<td><%= 'Popularidad' %></td>
+		<td><%=  'Seguridad' %></td>
+		<td><%=  'Categoría' %></td>
+	</tr>
+
 	<% @bookmarks.each do |c| %>
-		<li><%= link_to c.url, {action: 'show', id: c.id} -%></li>
+		<tr>
+			<td><%= link_to c.url, {action: 'show', id: c.id} -%></td>
+			<td><%= c.popularity %></td>
+			<td><%= c.security %></td>
+			
+		</tr>
 	<% end %>
-	</ul>
+	</table>
 <% end %>
 <p>
 	<%= button_tag "Agregar Bookmark", {type: 'submit',onclick: "window.location='/bookmarks/new'" }%>
 </p>
+
+<%= render "layouts/back" %>

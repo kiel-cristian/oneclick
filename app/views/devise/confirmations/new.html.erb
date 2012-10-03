@@ -1,4 +1,4 @@
-<h2>Resend confirmation instructions</h2>
+<h2>Instrucciones de confirmacion de reenvio</h2>
 
 <%= form_for(resource, :as => resource_name, :url => confirmation_path(resource_name), :html => { :method => :post }) do |f| %>
   <%= devise_error_messages! %>
@@ -6,5 +6,8 @@
   <div><%= f.label :username %><br />
   <%= f.text_field :username %></div>
 
-  <div><%= f.submit "Resend confirmation instructions" %></div>
+  <div><%= f.submit "Reenviar Instrucciones" %></div>
+
 <% end %>
+
+<%= render "layouts/back" %>

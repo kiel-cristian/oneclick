@@ -1,0 +1,14 @@
+
+<% if @bookmarks.blank? %>
+	<p><h2>@user.username, actualmente no has ingresado bookmarks.</h2></p>
+<% else %>
+	<p><h2>Estos son tus bookmarks</h2></p>
+	<ul id="bookmarks">
+	<% @bookmarks.each do |c| %>
+		<li><%= link_to c.url, {action: 'show', id: c.id} -%></li>
+	<% end %>
+	</ul>
+<% end %>
+<p>
+	<%= button_tag "Agregar Bookmark", {type: 'submit',onclick: "window.location='/bookmarks/new'" }%>
+</p>

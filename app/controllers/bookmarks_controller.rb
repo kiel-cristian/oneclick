@@ -1,11 +1,18 @@
 class BookmarksController < ApplicationController
-	before_filter :authenticate_user!, :only=>['create', 'edit' ,'update' ,'delete']
+	before_filter :authenticate_user!, :only=>['create', 'edit' ,'update' ,'delete','new']
 
 	def index
 		redirect_to action: 'list'
 	end
 	def list
 		@bookmarks = Bookmark.all
+		@categories = []
+
+		@bookmarks.each do |b|
+			@categories.append(id: Category.find(b.id).name)
+		end
+
+		puts @categories.inspect
 	end
 
 	def new

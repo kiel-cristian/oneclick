@@ -6,7 +6,7 @@
 	<%= collection_select(:bookmarks,:categories_id,@categories,:id,:name) %></p>
 
 	<%= submit_tag "Create" %>
-	
+
 <%end %>
 
 <%= button_tag 'Back', {onclick: 'window.history.go(-1);',name: 'back',type: 'submit'} %>
@@ -18,3 +18,5 @@
 
 	<%= puts @errors.inspect if @errors.presence%>
 </p>
+
+<%= render "layouts/back" %>

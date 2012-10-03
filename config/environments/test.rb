@@ -34,4 +34,6 @@ Oneclick::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+
+  config.i18n.available_locales = :es
 end

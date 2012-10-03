@@ -4,11 +4,14 @@
   <%= devise_error_messages! %>
   <%= f.hidden_field :reset_password_token %>
 
-  <div><%= f.label :password, "New password" %><br />
+  <div><%= f.label :password, "Nueva contraseña" %><br />
   <%= f.password_field :password %></div>
 
-  <div><%= f.label :password_confirmation, "Confirm new password" %><br />
+  <div><%= f.label :password_confirmation, "Confirmar contraseña" %><br />
   <%= f.password_field :password_confirmation %></div>
 
-  <div><%= f.submit "Change my password" %></div>
+  <div><%= f.submit "Cambiar mi contraseña" %></div>
+
 <% end %>
+
+<%= render "layouts/back" %>

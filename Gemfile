@@ -47,3 +47,4 @@ gem "omniauth", ">= 1.1.0"
 gem "omniauth-facebook"
 gem "rspec"
 gem "devise"
+gem 'rails-i18n'

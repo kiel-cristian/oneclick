@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
 
-  before_filter :authenticate_user!, :only=>['index', 'change_password']
+  before_filter :authenticate_user!, :only=>['info', 'change_password']
+
+  after_sign_in_path_for :info
 
   #API
   #'index'
@@ -18,9 +20,15 @@ class UsersController < ApplicationController
   # user_session
 
   def index
+    redirect_to action: 'login'
+  end
+
+  def info
     p current_user
     @user = User.find(current_user)
     @bookmarks = UserBookmark.where(users_id: @user.id)
+
+    render action: 'info'
   end
 
   # def login

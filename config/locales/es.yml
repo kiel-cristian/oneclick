@@ -1,0 +1,6 @@
+es:
+  confirmation: "comfirmacion"
+
+helpers:
+    label:
+        password: "Contrasena"
