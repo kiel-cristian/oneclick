@@ -5,12 +5,32 @@ class BookmarksController < ApplicationController
 		redirect_to action: 'list'
 	end
 	def list
-		@bookmarks = Bookmark.all
+		bookmarks = Bookmark.all
 		@categories = []
 
-		@bookmarks.each do |b|
-			@categories.append(id: Category.find(b.id).name)
-		end
+		# bookmarks.each do |b|
+		# 	cat = Category.find(b.id).name
+		# 	if cat.blank?
+		# 		categories.append(name: "Sin categor&iacute;a")
+		# 	else
+
+		# 		categories.append(name: cat)
+		# 	end
+		# end
+
+		# @bookmarks = bookmarks.collect
+
+		# for i in 0..bookmarks.length do
+		# 	puts i
+		# 	@bookmarks.category = categories
+		# end
+
+
+
+		# bookmarks.each do |b|
+		# 	# b.category = @categories[i]
+		# 	p collect(b)
+		# end
 
 		puts @categories.inspect
 	end

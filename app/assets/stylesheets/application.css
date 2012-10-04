@@ -124,11 +124,14 @@ table{
 
 td{
 	font-size: 12px;
-	font-weight: bold;
 	font-style:  italic;
 	text-align: center;
+	color: #ac16ef;
 }
-
+td.tittle{
+	font-weight: bold;
+	color: #1612ff;
+}
 
 form {
 	margin: 0 auto;
@@ -274,7 +277,6 @@ input[type=submit],button[type=submit],a[type=button]{
 	float: right;
 	margin-right: 20px;
 	margin-top: 20px;
-	
 	width: 90px;
 	/*width: auto;*/
 	height: 45px;

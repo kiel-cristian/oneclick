@@ -11,22 +11,26 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121003064054) do
+ActiveRecord::Schema.define(:version => 20121004023712) do
 
   create_table "bookmarks", :force => true do |t|
-    t.string   "url"
-    t.integer  "popularity"
-    t.integer  "security"
-    t.string   "category"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.integer  "categories_id"
+    t.string   "url",           :null => false
+    t.integer  "popularity",    :null => false
+    t.integer  "security",      :null => false
   end
 
+  add_index "bookmarks", ["url"], :name => "index_bookmarks_on_url", :unique => true
+
   create_table "categories", :force => true do |t|
-    t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "name",       :null => false
   end
+
+  add_index "categories", ["name"], :name => "index_categories_on_name", :unique => true
 
   create_table "user_bookmarks", :force => true do |t|
     t.integer  "users_id"
@@ -34,6 +38,8 @@ ActiveRecord::Schema.define(:version => 20121003064054) do
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end
+
+  add_index "user_bookmarks", ["users_id", "bookmarks_id"], :name => "index_user_bookmarks_on_users_id_and_bookmarks_id", :unique => true
 
   create_table "users", :force => true do |t|
     t.boolean  "admin"
