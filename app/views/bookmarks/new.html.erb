@@ -1,4 +1,4 @@
-<h2>Add new bookmark</h2>
+<h2>Añadir bookmarks</h2>
 <%= form_tag :action => 'create' do%>
 	<p><label for="bookmark_url">URL</label>:
 	<%= text_field 'bookmark', 'url' %></p>
@@ -8,8 +8,6 @@
 	<%= submit_tag "Create" %>
 
 <%end %>
-
-<%= button_tag 'Back', {onclick: 'window.history.go(-1);',name: 'back',type: 'submit'} %>
 
 <p class="errors">
 	<%if @errors.presence %>

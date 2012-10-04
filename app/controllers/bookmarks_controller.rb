@@ -5,8 +5,18 @@ class BookmarksController < ApplicationController
 		redirect_to action: 'list'
 	end
 	def list
-		bookmarks = Bookmark.all
-		@categories = []
+		page = params[:page] or 1
+		bookmarks = Bookmark.order(:popularity).page(page).per(20)
+		@bookmarks = []
+
+		if bookmarks.presence
+			bookmarks.each do |b|
+				category_id = b.categories_id
+				category_name = Category.find(category_id).name
+
+				@bookmarks.append([url: b.url,popularity: b.popularity,security: b.security,category: category_name])
+			end
+		end
 
 		# bookmarks.each do |b|
 		# 	cat = Category.find(b.id).name
@@ -32,7 +42,8 @@ class BookmarksController < ApplicationController
 		# 	p collect(b)
 		# end
 
-		puts @categories.inspect
+		puts bookmarks.inspect
+		puts @bookmarks.inspect
 	end
 
 	def new
@@ -50,7 +61,7 @@ class BookmarksController < ApplicationController
 
   			render action: 'new'
   		else
-			@bookmark = Bookmark.new(url: params[:bookmark][:url],category: params[:bookmarks][:categories_id],security: 0,popularity: 0)
+			@bookmark = Bookmark.new(url: params[:bookmark][:url],categories_id: params[:bookmarks][:categories_id],security: 0,popularity: 0)
 			if @bookmark.save
 				redirect_to action: 'list'
 			else
@@ -58,7 +69,7 @@ class BookmarksController < ApplicationController
 			end
 		end
 	end
-	
+
 	def show
 		@bookmark = Bookmark.find(params[:id])
 	end

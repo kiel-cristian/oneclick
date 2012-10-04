@@ -1,6 +1,13 @@
+#!/bin/env ruby
+# encoding: utf-8
 es:
-  confirmation: "comfirmacion"
+  confirmation: "confirmación"
+  views:
+    pagination:
+      previous: "&lt; Anterior"
+      next: "SIguiente &gt;"
+      truncate: "..."
 
 helpers:
     label:
-        password: "Contrasena"
+        password: "Contraseña"

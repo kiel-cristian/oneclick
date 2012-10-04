@@ -2,24 +2,32 @@ Oneclick::Application.routes.draw do
 
   root to: 'bookmarks#list'
 
+  devise_scope :user do
+    get 'users/logout' => "devise/sessions#destroy"
+  end
+
   devise_for :users, :path => "users",
-                     :path_names => 
+                     :path_names =>
                             {   :sign_in => 'login',
-                                :sign_out => 'logout', 
-                                :password => 'secret', 
-                                :confirmation => 'confirm', 
-                                :unlock => 'unblock', 
-                                :registration => 'register', 
+                                :sign_out => 'logout',
+                                :password => 'secret',
+                                :confirmation => 'confirm',
+                                :unlock => 'unblock',
+                                :registration => 'register',
                                 :sign_up => 'signup'
                               }
 
 
-  devise_for :bookmarks
+  # devise_for :bookmarks
+
+  # devise_scope :user do
+  #   delete "/logout" => "devise/sessions#destroy"
+  # end
 
   resources :users
   resources :bookmarks
   resources :users_bookmarks
-  
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

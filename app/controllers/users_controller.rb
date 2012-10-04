@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
 
-  before_filter :authenticate_user!, :only=>['info', 'change_password']
+  before_filter :authenticate_user! :except=> ['login','register']#, :only=>['show','info', 'change_password']
 
-  after_sign_in_path_for :info
+  # after_filter :info
 
   #API
   #'index'
@@ -19,9 +19,13 @@ class UsersController < ApplicationController
   # current_user
   # user_session
 
-  def index
-    redirect_to action: 'login'
-  end
+  # def show
+  #   redirect_to action: 'info'
+  # end
+
+  # def index
+  #   redirect_to action: 'login'
+  # end
 
   def info
     p current_user

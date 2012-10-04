@@ -48,3 +48,4 @@ gem "omniauth-facebook"
 gem "rspec"
 gem "devise"
 gem 'rails-i18n'
+gem 'kaminari'

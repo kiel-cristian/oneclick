@@ -11,15 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121004030109) do
+ActiveRecord::Schema.define(:version => 20121004065047) do
 
   create_table "bookmarks", :force => true do |t|
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-    t.integer  "categories_id"
-    t.string   "url",           :null => false
-    t.integer  "popularity",    :null => false
-    t.integer  "security",      :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "url",        :null => false
+    t.integer  "popularity", :null => false
+    t.integer  "security",   :null => false
+    t.string   "category",   :null => false
   end
 
   add_index "bookmarks", ["url"], :name => "index_bookmarks_on_url", :unique => true
@@ -62,7 +62,6 @@ ActiveRecord::Schema.define(:version => 20121004030109) do
     t.boolean  "admin"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
-    t.string   "users",                                  :null => false
     t.string   "username",                               :null => false
     t.string   "email",                  :default => "", :null => false
     t.string   "encrypted_password",     :default => "", :null => false
