@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121004023712) do
+ActiveRecord::Schema.define(:version => 20121004030109) do
 
   create_table "bookmarks", :force => true do |t|
     t.datetime "created_at",    :null => false
@@ -24,6 +24,14 @@ ActiveRecord::Schema.define(:version => 20121004023712) do
 
   add_index "bookmarks", ["url"], :name => "index_bookmarks_on_url", :unique => true
 
+  create_table "bookmarks_denunces", :force => true do |t|
+    t.integer  "denunces_id",                  :null => false
+    t.integer  "bookmarks_id",                 :null => false
+    t.string   "message",      :default => "", :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+  end
+
   create_table "categories", :force => true do |t|
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
@@ -31,6 +39,15 @@ ActiveRecord::Schema.define(:version => 20121004023712) do
   end
 
   add_index "categories", ["name"], :name => "index_categories_on_name", :unique => true
+
+  create_table "denunces", :force => true do |t|
+    t.string   "type",                        :null => false
+    t.string   "description", :default => "", :null => false
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
+  end
+
+  add_index "denunces", ["type", "description"], :name => "index_denunces_on_type_and_description", :unique => true
 
   create_table "user_bookmarks", :force => true do |t|
     t.integer  "users_id"
