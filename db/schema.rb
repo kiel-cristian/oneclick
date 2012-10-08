@@ -11,18 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121004065047) do
+ActiveRecord::Schema.define(:version => 20121008045451) do
 
   create_table "bookmarks", :force => true do |t|
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-    t.string   "url",        :null => false
-    t.integer  "popularity", :null => false
-    t.integer  "security",   :null => false
-    t.string   "category",   :null => false
+    t.string   "url",           :null => false
+    t.integer  "popularity",    :null => false
+    t.integer  "security",      :null => false
+    t.integer  "categories_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
-  add_index "bookmarks", ["category"], :name => "index_bookmarks_on_category", :unique => true
   add_index "bookmarks", ["url"], :name => "index_bookmarks_on_url", :unique => true
 
   create_table "bookmarks_denunces", :force => true do |t|
@@ -34,9 +33,9 @@ ActiveRecord::Schema.define(:version => 20121004065047) do
   end
 
   create_table "categories", :force => true do |t|
+    t.string   "name",       :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.string   "name",       :null => false
   end
 
   add_index "categories", ["name"], :name => "index_categories_on_name", :unique => true
@@ -60,12 +59,12 @@ ActiveRecord::Schema.define(:version => 20121004065047) do
   add_index "user_bookmarks", ["users_id", "bookmarks_id"], :name => "index_user_bookmarks_on_users_id_and_bookmarks_id", :unique => true
 
   create_table "users", :force => true do |t|
-    t.boolean  "admin"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
-    t.string   "username",                               :null => false
-    t.string   "email",                  :default => "", :null => false
-    t.string   "encrypted_password",     :default => "", :null => false
+    t.boolean  "admin",                  :default => false, :null => false
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
+    t.string   "username",                                  :null => false
+    t.string   "email",                  :default => "",    :null => false
+    t.string   "encrypted_password",     :default => "",    :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"

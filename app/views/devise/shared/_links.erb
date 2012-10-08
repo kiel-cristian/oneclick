@@ -46,5 +46,9 @@ pass 	= 	false
 		<% end %>
 	<% end %>
 <%else%>
-Bienvenido <%= current_user.username%> | <%= link_to "Cerrar sesión", destroy_user_session_path %>
+Bienvenido <%= current_user.username%> <br>
+		<% if controller_name != 'users' %>
+			<%= link_to "Info", {controller: 'users', action: 'show', id: current_user.id} %> |
+		<%end%>
+		<%= link_to "Cerrar sesión", destroy_user_session_path %>
 <% end %>

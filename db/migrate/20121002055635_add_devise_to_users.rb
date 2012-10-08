@@ -1,12 +1,10 @@
 class AddDeviseToUsers < ActiveRecord::Migration
-  def self.up
-    remove_column :users,:login
-    remove_column :users,:salt
-    remove_column :users,:hashed_password
+  def up
     remove_column :users, :email
+    remove_column :users, :username
 
     change_table(:users) do |t|
-      t.string :users,:username,    null: false
+      t.string :username,    null: false
       ## Database authenticatable
       t.string :email,              :null => false, :default => ""
       t.string :encrypted_password, :null => false, :default => ""
@@ -46,6 +44,7 @@ class AddDeviseToUsers < ActiveRecord::Migration
 
     add_index :users, :email,                :unique => true
     add_index :users, :reset_password_token, :unique => true
+    add_index :users, :username,              unique: true
     # add_index :users, :confirmation_token,   :unique => true
     # add_index :users, :unlock_token,         :unique => true
     # add_index :users, :authentication_token, :unique => true

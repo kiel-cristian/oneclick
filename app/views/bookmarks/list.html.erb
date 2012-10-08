@@ -12,15 +12,17 @@
 		<td class='tittle'><%=  'Categoría' %></td>
 	</tr>
 
-	<%= paginate bookmarks %>
+	<div class="autopagerize_page_element">
+		<% @bookmarks.each do |c| %>
+			<tr>
+				<td><%= link_to c.url, {action: 'show', id: c.id} %></td>
+				<td><%= c.popularity %></td>
+				<td><%= c.security %></td>
+				<td><%= c.get_name() %></td>
+			</tr>
+		<% end %>
+	</div>
 
-	<% @bookmarks.each do |c| %>
-		<tr>
-			<td><%= link_to c.url, {action: 'show', id: c.id} -%></td>
-			<td><%= c.popularity %></td>
-			<td><%= c.security %></td>
-		</tr>
-	<% end %>
 	</table>
 <% end %>
 <p>

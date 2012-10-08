@@ -11,15 +11,15 @@
 
 Category.delete_all
 Category.create(name: 'Deportes')
-Category.create(name: 'Entretencion')
+Category.create(name: 'Entretención')
 Category.create(name: 'Familia')
-Category.create(name: 'Computacion')
+Category.create(name: 'Computación')
 Category.create(name: 'Salud')
 Category.create(name: 'Belleza')
 Category.create(name: 'Turismo')
 Category.create(name: 'Ciencias')
 Category.create(name: 'Artes Visuales')
-Category.create(name: 'Musica')
+Category.create(name: 'Música')
 Category.create(name: 'Otros')
 
 Denunce.delete_all

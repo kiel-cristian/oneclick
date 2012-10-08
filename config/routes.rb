@@ -1,6 +1,7 @@
 Oneclick::Application.routes.draw do
 
   root to: 'bookmarks#list'
+  # root to: 'users#show'
 
   devise_scope :user do
     get 'users/logout' => "devise/sessions#destroy"
@@ -23,6 +24,8 @@ Oneclick::Application.routes.draw do
   # devise_scope :user do
   #   delete "/logout" => "devise/sessions#destroy"
   # end
+
+  get 'bookmarks/increment' => 'bookmarks#increment'
 
   resources :users
   resources :bookmarks

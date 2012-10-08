@@ -13,7 +13,7 @@ class CreateDenunce < ActiveRecord::Migration
     	t.references	:bookmarks,		null:false
     	t.string		:message,		null:false,	default: ""
 
-      	t.timestamps
+      t.timestamps
     end
 
   end

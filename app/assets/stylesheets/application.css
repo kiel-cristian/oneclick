@@ -312,5 +312,17 @@ p.errors{
 	font-weight: bold;
 }
 
+p.notice{
+	color: #33ff00;
+	font-weight: bold;
+	font-style: italic;
+}
+
+p.tittle{
+	color: #3300ff;
+	font-weight: bold;
+	font-size: 18px;
+	font-style: italic;
+}
 
 

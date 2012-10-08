@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
 
-  before_filter :authenticate_user! :except=> ['login','register']#, :only=>['show','info', 'change_password']
+  before_filter :authenticate_user! , only: ['show','change_password']
 
-  # after_filter :info
+  after_filter :show
 
   #API
   #'index'
@@ -27,12 +27,14 @@ class UsersController < ApplicationController
   #   redirect_to action: 'login'
   # end
 
-  def info
-    p current_user
-    @user = User.find(current_user)
-    @bookmarks = UserBookmark.where(users_id: @user.id)
+  def show
+    # p current_user.inspect
+    # @user = User.find(current_user)
+    # p @user.inspect
+    @user = current_user
+    @bookmarks = UserBookmark.where(users_id: current_user.id)
 
-    render action: 'info'
+    # render action: 'info'
   end
 
   # def login

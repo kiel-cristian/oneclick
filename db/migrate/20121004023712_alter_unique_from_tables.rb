@@ -3,6 +3,7 @@ class AlterUniqueFromTables < ActiveRecord::Migration
   	add_index :categories,	:name,	unique: true
   	add_index :bookmarks,	:url,	unique: true
   	add_index :user_bookmarks,	[:users_id,:bookmarks_id],	unique: true
+  	# add_index :bookmarks,:category ,null:false, unique: true
 
   end
 

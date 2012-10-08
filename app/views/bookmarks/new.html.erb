@@ -1,20 +1,15 @@
 <h2>Añadir bookmarks</h2>
-<%= form_tag :action => 'create' do%>
-	<p><label for="bookmark_url">URL</label>:
-	<%= text_field 'bookmark', 'url' %></p>
-	<p><label for="bookmark_category">Category</label>:
-	<%= collection_select(:bookmarks,:categories_id,@categories,:id,:name) %></p>
-
-	<%= submit_tag "Create" %>
-
-<%end %>
-
 <p class="errors">
 	<%if @errors.presence %>
 		<%=@errors%>
 	<%end %>
-
 	<%= puts @errors.inspect if @errors.presence%>
 </p>
-
-<%= render "layouts/back" %>
+<%= form_tag :action => 'create' do%>
+	<p><label for="bookmark_url">URL</label>:
+	<%= text_field 'bookmark', 'url',{value: 'http://'} %></p>
+	<p><label for="bookmark_category">Category</label>:
+	<%= collection_select(:bookmarks,:category,@categories,:id,:name) %></p>
+	<%= submit_tag "Crear" %>
+	<%= render "layouts/back" %>
+<%end %>
