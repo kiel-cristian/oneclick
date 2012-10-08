@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(:version => 20121004065047) do
     t.string   "category",   :null => false
   end
 
+  add_index "bookmarks", ["category"], :name => "index_bookmarks_on_category", :unique => true
   add_index "bookmarks", ["url"], :name => "index_bookmarks_on_url", :unique => true
 
   create_table "bookmarks_denunces", :force => true do |t|

@@ -18,30 +18,6 @@ class BookmarksController < ApplicationController
 			end
 		end
 
-		# bookmarks.each do |b|
-		# 	cat = Category.find(b.id).name
-		# 	if cat.blank?
-		# 		categories.append(name: "Sin categor&iacute;a")
-		# 	else
-
-		# 		categories.append(name: cat)
-		# 	end
-		# end
-
-		# @bookmarks = bookmarks.collect
-
-		# for i in 0..bookmarks.length do
-		# 	puts i
-		# 	@bookmarks.category = categories
-		# end
-
-
-
-		# bookmarks.each do |b|
-		# 	# b.category = @categories[i]
-		# 	p collect(b)
-		# end
-
 		puts bookmarks.inspect
 		puts @bookmarks.inspect
 	end
