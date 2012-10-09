@@ -26,6 +26,9 @@ Oneclick::Application.routes.draw do
   # end
 
   get 'bookmarks/increment' => 'bookmarks#increment'
+  get 'bookmarks/denunce' => 'bookmarks#denunce'
+  get 'users/delete_bookmark' => 'users#delete_bookmark'
+  get 'users/add_bookmark' => 'users#add_bookmark'
 
   resources :users
   resources :bookmarks

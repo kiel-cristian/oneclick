@@ -7,23 +7,10 @@ class BookmarksController < ApplicationController
 		redirect_to action: 'list'
 	end
 	def list
+		@alert = params[:alert]
 		page = params[:page] or 1
-		# bookmarks = Bookmark.order(:popularity).page(page).per(20)
-		@bookmarks = Bookmark.order(:popularity).page(page).per(20)
-
-		# @bookmarks = []
-
-		# if bookmarks.presence
-		# 	bookmarks.each do |b|
-		# 		category_id = b.categories_id
-		# 		category_name = Category.find(category_id).name
-
-		# 		@bookmarks.append([url: b.url,popularity: b.popularity,security: b.security,category: category_name])
-		# 	end
-		# end
-
-		# puts bookmarks.inspect
-		# puts @bookmarks.inspect
+		order_option = params[:order] or :popularity
+		@bookmarks = Bookmark.order(order_option).page(page).per(5)
 
      end
 
@@ -106,5 +93,13 @@ class BookmarksController < ApplicationController
 		b.update_attributes(popularity: p)
 
 		redirect_to b.url
+	end
+
+	def denunce
+		b_id = params[:id]
+
+		@faults = Denunce.all
+
+
 	end
 end

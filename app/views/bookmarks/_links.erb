@@ -1,6 +1,6 @@
 <% puts controller_name.inspect %>
 
-<%- if controller_name != 'bookmarks' %>
+<%- if controller_name != 'bookmarks' or(controller_name == 'bookmarks' and action_name != 'list') %>
 	<%= ' | ' %>
 	<%= link_to "Bookmarks", :bookmarks %>
 <% end -%>

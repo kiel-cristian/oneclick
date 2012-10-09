@@ -11,7 +11,7 @@ class Bookmark < ActiveRecord::Base
   validates_format_of :url, :with => URI::regexp(%w(http https)), :message => "debe ser una URL válida"
 
   def get_name()
-  	c = Category.where(id: self.id)
+  	c = Category.where(id: self.categories_id)
   	p c
   	if c.presence
   		return c.first.name

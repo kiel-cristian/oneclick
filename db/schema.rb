@@ -41,13 +41,13 @@ ActiveRecord::Schema.define(:version => 20121008045451) do
   add_index "categories", ["name"], :name => "index_categories_on_name", :unique => true
 
   create_table "denunces", :force => true do |t|
-    t.string   "type",                        :null => false
+    t.string   "name",                        :null => false
     t.string   "description", :default => "", :null => false
     t.datetime "created_at",                  :null => false
     t.datetime "updated_at",                  :null => false
   end
 
-  add_index "denunces", ["type", "description"], :name => "index_denunces_on_type_and_description", :unique => true
+  add_index "denunces", ["name", "description"], :name => "index_denunces_on_name_and_description", :unique => true
 
   create_table "user_bookmarks", :force => true do |t|
     t.integer  "users_id"

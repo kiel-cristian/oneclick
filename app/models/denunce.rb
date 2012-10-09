@@ -1,3 +1,3 @@
 class Denunce < ActiveRecord::Base
-  attr_accessible :type,:description
+  attr_accessible :name,:description
 end

@@ -1,0 +1,18 @@
+<h2>Denunciar bookmarks</h2>
+<p class="errors">
+	<%if @errors.presence %>
+		<%=@errors%>
+	<%end %>
+	<%= puts @errors.inspect if @errors.presence%>
+</p>
+<%= form_tag :action => 'denunce' do%>
+	<p><label for="bookmark_cause">Causa</label>:
+	<%= collection_select(:bookmarks,:fault,@faults,:id,:name) %></p>
+
+	<p><label for="bookmark_message">Mensaje</label>:
+	<%= text_area 'bookmark_message', 'message',{value: 'El sitio ...'} %></p>
+
+	<%= submit_tag "Denunciar" %>
+
+	<%= link_to 'Volver', {action: 'list', controller: 'bookmarks'}, type: 'button2' %>
+<%end %>

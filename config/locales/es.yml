@@ -5,8 +5,10 @@ es:
   views:
     pagination:
       previous: "&lt; Anterior"
-      next: "SIguiente &gt;"
+      next: "Siguiente &gt;"
       truncate: "..."
+      last: "Último"
+      first: "Primero"
 
 helpers:
     label:

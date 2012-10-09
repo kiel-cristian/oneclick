@@ -1,12 +1,9 @@
-
 <% if @bookmark.blank? %>
 	<p><h2>Actualmente no hay bookmarks en el sistema</h2></p>
 <% else %>
 	<p class='tittle'><%= @bookmark.url %></p>
 	<ul>
-	<li><%= 
-			link_to "Ir al sitio", {action: 'increment' , id: @bookmark.id}
-			%></li>
+	<li><%= link_to "Ir al sitio", {action: 'increment' , id: @bookmark.id} %></li>
 	<li>Popularidad : <%= @bookmark.popularity%></li>
 	<li>Seguridad : <%= @bookmark.security%></li>
 	<li>Categoría : <%= @bookmark.get_name()%></li>

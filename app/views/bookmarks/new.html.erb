@@ -11,5 +11,6 @@
 	<p><label for="bookmark_category">Category</label>:
 	<%= collection_select(:bookmarks,:category,@categories,:id,:name) %></p>
 	<%= submit_tag "Crear" %>
-	<%= render "layouts/back" %>
+
+	<%= link_to 'Volver', {action: 'list'}, type: 'button2' %>
 <%end %>

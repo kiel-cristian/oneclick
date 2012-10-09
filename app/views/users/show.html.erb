@@ -1,14 +1,29 @@
-
+<%= render "layouts/notice" %>
 <% if @bookmarks.blank? %>
 	<p><h2> <%= @user.username %>, actualmente no has ingresado bookmarks.</h2></p>
 <% else %>
 	<p><h2>Estos son tus bookmarks</h2></p>
-	<ul id="bookmarks">
+	<div class="autopagerize_page_element">
+		<%= paginate @bookmarks, method: 'post' %>
+	</div>
+
+	<table id="bookmarks">
 	<% @bookmarks.each do |c| %>
-		<li><%= link_to c.get_url(), {controller: 'bookmarks',action: 'show', id: c.id} -%></li>
+		<tr>
+			<td><%= c.get_url() %></td>
+			<td><%= link_to "Ir al detalle", {controller: 'bookmarks', action: 'show', id: c.bookmarks_id} , type: "button" %></td>
+			<td><%= link_to "Denunciar", { controller: 'bookmarks', action: "denunce", id: c.bookmarks_id}, type: "button4" %></td>
+			<td><%= link_to "Eliminar", { action: "delete_bookmark", id: c.bookmarks_id}, :confirm => '¿Estás seguro que deseas borrar el elemento?', type: "button4" %></td>
+		</tr>
 	<% end %>
-	</ul>
+	</table>
+
+	<div class="autopagerize_page_element">
+		<%= paginate @bookmarks, method: 'post' %>
+	</div>
 <% end %>
 <p>
-	<%= button_tag "Agregar Bookmark", {type: 'submit',onclick: "window.location='/bookmarks/new'" }%>
+	<%= button_tag "Agregar Bookmark", {type: 'submit',onclick: "window.location='/bookmarks/'" }%>
 </p>
+
+<%= render "layouts/back" %>

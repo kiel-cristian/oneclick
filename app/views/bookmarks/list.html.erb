@@ -1,32 +1,37 @@
+<%= render "layouts/notice" %>
+<%= render "layouts/alert" %>
 
 <% if @bookmarks.blank? %>
 	<p><h2>Actualmente no hay bookmarks en el sistema</h2></p>
 <% else %>
 	<p><h2>Estos son los bookmarks actuales del sistema</h2></p>
-	<table id="bookmarks">
+	<div class="autopagerize_page_element">
+		<%= paginate @bookmarks, method: 'post' %>
+	</div>
 
+	<table id="bookmarks">
 	<tr>
 		<td class='tittle'><%= 'URL' %></td>
-		<td class='tittle'><%= 'Popularidad' %></td>
-		<td class='tittle'><%=  'Seguridad' %></td>
-		<td class='tittle'><%=  'Categoría' %></td>
+		<td class='tittle'><%= link_to 'Popularidad',	{action: 'list', order: 'popularity'} %></td>
+		<td class='tittle'><%= link_to 'Seguridad',		{action: 'list', order: 'security'} %></td>
+		<td class='tittle'><%= link_to 'Categoría',		{action: 'list', order: 'categories_id'} %></td>
 	</tr>
-
-	<div class="autopagerize_page_element">
 		<% @bookmarks.each do |c| %>
 			<tr>
 				<td><%= link_to c.url, {action: 'show', id: c.id} %></td>
 				<td><%= c.popularity %></td>
 				<td><%= c.security %></td>
 				<td><%= c.get_name() %></td>
+				<td><%= link_to "Agregar", { controller: "users", action: "add_bookmark", id: c.id}, type: "button4" %></td>
 			</tr>
 		<% end %>
-	</div>
-
 	</table>
+	<div class="autopagerize_page_element">
+		<%= paginate @bookmarks, method: 'post' %>
+	</div>
 <% end %>
 <p>
-	<%= button_tag "Agregar Bookmark", {type: 'submit',onclick: "window.location='/bookmarks/new'" }%>
+	<%= button_tag "Nuevo Bookmark", {type: 'submit',onclick: "window.location='/bookmarks/new'" }%>
 </p>
 
 <%= render "layouts/back" %>

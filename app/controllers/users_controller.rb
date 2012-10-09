@@ -2,16 +2,16 @@ class UsersController < ApplicationController
 
   before_filter :authenticate_user! , only: ['show','change_password']
 
-  after_filter :show
+  after_filter :show2
 
   #API
   #'index'
   # :sign_in => 'login',
-  # :sign_out => 'logout', 
-  # :password => 'secret', 
-  # :confirmation => 'confirm', 
-  # :unlock => 'unblock', 
-  # :registration => 'register', 
+  # :sign_out => 'logout',
+  # :password => 'secret',
+  # :confirmation => 'confirm',
+  # :unlock => 'unblock',
+  # :registration => 'register',
   # :sign_up => 'signup'
 
   #HELPERS
@@ -26,15 +26,43 @@ class UsersController < ApplicationController
   # def index
   #   redirect_to action: 'login'
   # end
+  def show2
+    page = params[:page] or 1
+    @user = current_user
+    @bookmarks = UserBookmark.where(users_id: current_user.id).page(page).per(5)
+  end
 
   def show
     # p current_user.inspect
     # @user = User.find(current_user)
     # p @user.inspect
+    page = params[:page] or 1
     @user = current_user
-    @bookmarks = UserBookmark.where(users_id: current_user.id)
+    @bookmarks = UserBookmark.where(users_id: current_user.id).page(page).per(5)
+    @notice = params[:notice]
 
     # render action: 'info'
+  end
+
+  def delete_bookmark
+    b_id = params[:id]
+    bookmark = UserBookmark.where(users_id: current_user.id, bookmarks_id: b_id)
+    bookmark.first.delete if bookmark.presence
+
+    redirect_to action: 'show', id: current_user.id
+  end
+
+  def add_bookmark
+    b_id = params[:id]
+
+    if Bookmark.find(b_id).presence and UserBookmark.where(users_id: current_user.id,bookmarks_id: b_id).blank?
+      ub = UserBookmark.new(users_id: current_user.id, bookmarks_id: b_id)
+      if ub.save
+        redirect_to action: 'show', id: current_user.id, notice: 'Bookmark agregado exitosamente' and return
+      end
+    else
+      redirect_to controller: 'bookmarks', action: 'list',alert: 'Ya posees este bookmark' and return
+    end
   end
 
   # def login
@@ -49,11 +77,11 @@ class UsersController < ApplicationController
 
   # def signup
   #   @user = User.new(@params[:user])
-  #   if request.post?  
+  #   if request.post?
   #     if @user.save
   #       session[:user] = User.authenticate(@user.login, @user.password)
   #       flash[:message] = "Signup successful"
-  #       redirect_to :action => "welcome"          
+  #       redirect_to :action => "welcome"
   #     else
   #       flash[:warning] = "Signup unsuccessful"
   #     end
