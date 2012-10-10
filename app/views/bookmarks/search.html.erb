@@ -1,0 +1,65 @@
+<%= render "layouts/notice" %>
+<%= render "layouts/alert" %>
+
+<p><h2>Buscar bookmarks</h2></p>
+<%= form_tag action: 'search' do %>
+	 <table>
+		<tr>
+			<td>
+	 			<p class="extend">
+					<label for="bookmark_category">Categoría</label>:
+					<select id="select_category" name="select[category]">
+					<% @categories.each do |c| %>
+						<option value="<%= c[:id]%>"><%= c[:name] %></option>
+					<% end %>
+					</select>
+
+					<label for="select_order"> según</label>:
+					<%=
+					# select :select,:order, @order
+					%>
+					<select id="select_order" name="select[order]">
+					<% @order.each do |o| %>
+						<option value="<%= o[:value]%>"><%= o[:name] %></option>
+					<% end %>
+					</select>
+
+					<label for="select_crecent">de forma</label>:
+					<select id="select_crecent" name="select[crecent]">
+					<% @crecent.each do |c| %>
+						<option value="<%= c[:value]%>"><%= c[:name] %></option>
+					<% end %>
+					</select>
+					<%=
+					 # select :select,:crecent, @crecent
+					 %>
+				</p>
+			</td>
+		</tr>
+	</table>
+	<%= submit_tag 'Buscar'%>
+	<%= render "layouts/back" %>
+<%end%>
+<br><br>
+<br><br>
+<% if @bookmarks.presence %>
+	<p><h2>Resultados</h2></p>
+	<br>
+	<table id="bookmarks">
+	<tr>
+		<td class='tittle'><%= 'URL' %></td>
+		<td class='tittle'><%= 'Popularidad' %></td>
+		<td class='tittle'><%= 'Seguridad' %></td>
+		<td class='tittle'><%= 'Categoría' %></td>
+	</tr>
+		<% @bookmarks.each do |c| %>
+			<tr>
+				<td><%= link_to c.url, {action: 'show', id: c.id} %></td>
+				<td><%= c.popularity %></td>
+				<td><%= c.security %></td>
+				<td><%= c.get_name() %></td>
+				<td><%= link_to "Agregar", { controller: "users", action: "add_bookmark", id: c.id}, type: "button4" %></td>
+			</tr>
+		<% end %>
+	</table>
+<% end %>

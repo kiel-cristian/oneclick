@@ -5,6 +5,7 @@
 	<p><h2>Actualmente no hay bookmarks en el sistema</h2></p>
 <% else %>
 	<p><h2>Estos son los bookmarks actuales del sistema</h2></p>
+
 	<div class="autopagerize_page_element">
 		<%= paginate @bookmarks, method: 'post' %>
 	</div>
@@ -33,5 +34,5 @@
 <p>
 	<%= button_tag "Nuevo Bookmark", {type: 'submit',onclick: "window.location='/bookmarks/new'" }%>
 </p>
-
+<%= button_tag "Buscar Bookmarks", { onclick: "window.location= '/bookmarks/search'"} %>
 <%= render "layouts/back" %>

@@ -7,12 +7,64 @@ class BookmarksController < ApplicationController
 		redirect_to action: 'list'
 	end
 	def list
+		@categories = Category.get_names()
+		@order = ['Categoría','Popularidad','Seguridad']
+		@crecent = ['Creciente', 'Decreciente']
 		@alert = params[:alert]
-		page = params[:page] or 1
-		order_option = params[:order] or :popularity
-		@bookmarks = Bookmark.order(order_option).page(page).per(5)
 
-     end
+		if params[:page].presence
+			page = params[:page]
+		else
+			page = 1
+		end
+
+		if params[:order].presence
+			order_option = params[:order]
+		else
+			order_option = 'popularity'
+		end
+
+		@bookmarks = Bookmark.order(order_option + ' DESC' ).page(page).per(5)
+    end
+
+    def search
+    	p "PARAMS"
+    	p params.inspect
+
+  		@categories = Category.get_names()
+		@order = get_order()
+		@crecent = get_crecent()
+		@alert = params[:alert]
+
+    	if params[:select].presence and params[:select][:order].presence
+			order_option = params[:select][:order]
+		else
+			order_option = 'popularity'
+		end
+
+		if params[:select] and params[:select][:category].presence
+			if params[:select][:category] == "0"
+				category = true
+			else
+				category = params[:select][:category]
+			end
+		else
+			category = true
+		end
+
+		if params[:select].presence and params[:select][:crecent].presence
+			crecent = params[:select][:crecent]
+		else
+			crecent = ''
+		end
+
+		if category == true
+			@bookmarks = Bookmark.order(order_option + ' ' + crecent )
+		else
+			@bookmarks = Bookmark.where(categories_id: category).order(order_option + ' ' + crecent)
+		end
+
+    end
 
 	def new
 		@bookmark = Bookmark.new
@@ -96,10 +148,31 @@ class BookmarksController < ApplicationController
 	end
 
 	def denunce
-		b_id = params[:id]
-
+		d_id = params[:bookmark]
+		if d_id.inspect
+			p params.inspect
+		else
+			p params.inspect
+		end
+		@b_id = params[:id]
 		@faults = Denunce.all
 
-
 	end
+
+	# def send_denunce
+	# 	d_id = params[:bookmarks][:fault][:id]
+	# 	@b_id = params[:id]
+	# 	@faults = Denunce.all
+
+	# 	render action: 'denunce', id: @b_id
+
+	# end
+
+	def get_order
+		return [{name: 'Popularidad', value: 'popularity'},{name: 'Seguridad', value: 'security'}]
+  	end
+
+  	def get_crecent
+  		return [{value: ' ', name: 'Menor a Mayor'}, {value: 'DESC', name: 'Mayor a Menor'}]
+  	end
 end

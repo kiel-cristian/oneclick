@@ -5,12 +5,12 @@
 	<%end %>
 	<%= puts @errors.inspect if @errors.presence%>
 </p>
-<%= form_tag :action => 'denunce' do%>
-	<p><label for="bookmark_cause">Causa</label>:
-	<%= collection_select(:bookmarks,:fault,@faults,:id,:name) %></p>
+<%= form_tag :action => 'denunce', id: @b_id do%>
+	<p><label for="bookmark_fault">Causa</label>:
+	<%= collection_select(:bookmark,:fault,@faults,:id,:name) %></p>
 
 	<p><label for="bookmark_message">Mensaje</label>:
-	<%= text_area 'bookmark_message', 'message',{value: 'El sitio ...'} %></p>
+	<%= text_area 'bookmark','message', {value: 'El sitio ...'} %></p>
 
 	<%= submit_tag "Denunciar" %>
 

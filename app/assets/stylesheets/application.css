@@ -49,7 +49,7 @@ html, body {
 
 #container {
 	/*position: fixed;*/
-	width: 340px;
+	width: 400px;
 	padding-right: 175px;
 	/*height: 280px;*/
 	/*height: auto;*/
@@ -306,16 +306,21 @@ a[type=button2]{
 	height: 33px;
 }
 
-a[type=button4]{
+a[type*=button4]{
 padding-bottom: 2px;
 padding-top: 10px;
 float: right;
 margin-right: 20px;
 margin-top: 20px;
-width: 90px;
+width: 59px;
 height: 28px;
-font-size: 14px;
+font-size: 11px;
 font-weight: bold;
+}
+
+a[type=button4_2]{
+margin-right: 224px;
+margin-top: auto;
 }
 
 input[type=submit]:hover {
@@ -349,4 +354,21 @@ p.tittle{
 	font-style: italic;
 }
 
+div.autopagerize_page_element{
+	font-size: 12px;
+	text-align: left;
+	margin-right: 0px;
+	margin-top: 20px;
+	margin-bottom: 16px;
+}
 
+p.extend{
+	text-align: left;
+	font-size: 2px;
+	margin-left: 20px;
+	width: 588px;
+}
+/*
+div.autopagerize_page_element a{
+	color: #dd1100;
+}*/
