@@ -149,24 +149,51 @@ class BookmarksController < ApplicationController
 
 	def denunce
 		d_id = params[:bookmark]
-		if d_id.inspect
-			p params.inspect
-		else
-			p params.inspect
-		end
 		@b_id = params[:id]
 		@faults = Denunce.all
 
+		# "bookmark"=>{"fault"=>"1", "message"=>"El sitio ..."
+
+		if d_id.inspect
+			fault 		= d_id[:fault]
+			message 	= d_id[:message]
+			denunce = BookmarksDenunce.new(bookmarks_id: @b_id,denunces_id: fault,message: message)
+
+			if denunce.save
+				factor = get_factor(fault)
+				points = get_points(fault)
+				div = User.all.count
+
+				bookmark = Bookmark.find(@b_id)
+				bookmark.change_security(factor,points,div)
+				@notice = "Denuncia ingresada con éxito"
+				# denuncia ingresada
+			else
+				@alert = "No se pudo ingresar la denuncia"
+			end
+		end
+
 	end
 
-	# def send_denunce
-	# 	d_id = params[:bookmarks][:fault][:id]
-	# 	@b_id = params[:id]
-	# 	@faults = Denunce.all
+	def get_factor(denunce_id)
+		if denunce_id == 1
+			return 50
+		elsif denunce_id == 2
+			return 25
+		elsif denunce_id == 3
+			return 20
+		elsif denunce_id == 4
+			return 10
+		elsif denunce_id == 5
+			return 5
+		else
+			return 1
+		end
+	end
 
-	# 	render action: 'denunce', id: @b_id
-
-	# end
+	def get_points(denunce_id)
+		return 1
+	end
 
 	def get_order
 		return [{name: 'Popularidad', value: 'popularity'},{name: 'Seguridad', value: 'security'}]

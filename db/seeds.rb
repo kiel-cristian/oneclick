@@ -24,10 +24,10 @@ Category.create(name: 'Otros')
 
 Denunce.delete_all
 Denunce.create(name: 'Inválido',description: 'La URL no existe, o dejo de existir')
-Denunce.create(name: 'Phishing',description: 'La URL apunta a un posible sitio de phishing')
 Denunce.create(name: 'Virus',description: 'La URL apunta a un sitio con contenido dañino')
-Denunce.create(name: 'Inadecuado',description: 'La URL apunta a un sitio de contenidos para adultos')
+Denunce.create(name: 'Phishing',description: 'La URL apunta a un posible sitio de phishing')
 Denunce.create(name: 'Piratería',description: 'La URL apunta a un sitio que atenta contra derechos de autor')
+Denunce.create(name: 'Inadecuado',description: 'La URL apunta a un sitio de contenidos para adultos')
 Denunce.create(name: 'Otro',description: 'La URL se sospecha insegura por otras causas')
 
 
