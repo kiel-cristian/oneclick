@@ -137,22 +137,24 @@ class BookmarksController < ApplicationController
 	def increment
 		#link_to "Ir al sitio", @bookmark.url, {onclick: 'increment_popularity();'
 		id = params[:id]
-
 		b = Bookmark.find(id)
-		p = b.popularity + 1
-		b.update_attributes(popularity: p)
 
-		redirect_to b.url
+		if b.security > -50
+			p = b.popularity + 1
+			b.update_attributes(popularity: p)
+			redirect_to b.url
+		else
+			@alert = "El sitio esta catalogado como inseguro, por ende, no se recomienda visitarlo."
+			@bookmark = Bookmark.find(id)
+			@category = @category_names[@bookmark.categories_id.to_i]
+			render action: "show", id: id
+		end
 	end
 
 	def vote
 		user_bookmark = UserBookmark.where(users_id: current_user.id, bookmarks_id: params[:id]).first
 		if user_bookmark.presence
-			if user_bookmark.vote < 0
-				prev_points = -1 * user_bookmark.vote.to_i
-			else
-				prev_points = user_bookmark.vote.to_i
-			end
+			prev_points = -1 * user_bookmark.vote.to_i
 
 			d_id = params[:bookmark]
 			@b_id = params[:id]
@@ -196,53 +198,45 @@ class BookmarksController < ApplicationController
 
 	end
 
-	# def get_factor(id)
-	# 	p "DENUNCE ID"
-	# 	p id
-	# 	vote_id = id.to_i
-
-	# 	if vote_id == 1
-	# 		return 50
-	# 	elsif vote_id == 2
-	# 		return 25
-	# 	elsif vote_id == 3
-	# 		return 20
-	# 	elsif vote_id == 4
-	# 		return 10
-	# 	elsif vote_id == 5
-	# 		return 5
-	# 	elsif vote_id == 6
-	# 		return 5
-	# 	elsif vote_id == 7
-	# 		return 10
-	# 	elsif vote_id == 8
-	# 		return 25
-	# 	elsif vote_id == 9
-	# 		return 50
-	# 	end
-	# end
-
 	def get_points(id)
 		vote_id = id.to_i
 
+		# Vote.create(name: 'Inválido',description: 'La URL no existe, o dejo de existir')
+		# Vote.create(name: 'Virus',description: 'La URL apunta a un sitio con contenido dañino')
+		# Vote.create(name: 'Phishing',description: 'La URL apunta a un posible sitio de phishing')
+		# Vote.create(name: 'Piratería',description: 'La URL apunta a un sitio que atenta contra derechos de autor')
+		# Vote.create(name: 'Inadecuado',description: 'La URL apunta a un sitio de contenidos para adultos')
+		# Vote.create(name: 'Pendiente',description: 'No sabe que tan segura es la URL')
+		# Vote.create(name: 'Confiable',description: 'URL confiable debido a uso que se le ha dado')
+		# Vote.create(name: 'Seguro',description: 'URL segura certificada')
+		# Vote.create(name: 'Muy Seguro',description: 'URL segura certificada por varias entidades y manejo seguro de datos')
+
+		# invalid     = (-200..-101)
+		# insecure    = (-100..-50)
+		# suspicious  = (-49..-20)
+		# pending     = (-19..19)
+		# confiable   = (20..49)
+		# secure      = (50..100)
+		# very        = (101..500)
+
 		if vote_id == 1
-			return -50
+			return -200
 		elsif vote_id == 2
-			return -25
+			return -100
 		elsif vote_id == 3
-			return -20
+			return -50
 		elsif vote_id == 4
-			return -10
+			return -49
 		elsif vote_id == 5
-			return -5
+			return -20
 		elsif vote_id == 6
-			return 5
+			return 0
 		elsif vote_id == 7
-			return 10
+			return 20
 		elsif vote_id == 8
-			return 25
-		elsif vote_id == 9
 			return 50
+		elsif vote_id == 9
+			return 101
 		end
 	end
 
