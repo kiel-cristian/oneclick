@@ -56,8 +56,15 @@
 			<tr>
 				<td><%= link_to c.url, {action: 'show', id: c.id} %></td>
 				<td><%= c.popularity %></td>
-				<td><%= c.security %></td>
-				<td><%= c.get_name() %></td>
+				<td><%
+					@security_names.each do |key,value|
+	      				if key.member? c.security.to_i %>
+	      					<%= raw value %>
+	      					<% break
+	      				end
+	    			end
+	    			%></td>
+				<td><%= @category_names[c.categories_id] %></td>
 				<td><%= link_to "Agregar", { controller: "users", action: "add_bookmark", id: c.id}, type: "button4" %></td>
 			</tr>
 		<% end %>

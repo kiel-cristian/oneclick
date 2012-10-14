@@ -22,12 +22,18 @@ Category.create(name: 'Ciencias')
 Category.create(name: 'Música')
 Category.create(name: 'Otros')
 
-Denunce.delete_all
-Denunce.create(name: 'Inválido',description: 'La URL no existe, o dejo de existir')
-Denunce.create(name: 'Virus',description: 'La URL apunta a un sitio con contenido dañino')
-Denunce.create(name: 'Phishing',description: 'La URL apunta a un posible sitio de phishing')
-Denunce.create(name: 'Piratería',description: 'La URL apunta a un sitio que atenta contra derechos de autor')
-Denunce.create(name: 'Inadecuado',description: 'La URL apunta a un sitio de contenidos para adultos')
-Denunce.create(name: 'Otro',description: 'La URL se sospecha insegura por otras causas')
+Vote.delete_all
+Vote.create(name: 'Inválido',description: 'La URL no existe, o dejo de existir')
+Vote.create(name: 'Virus',description: 'La URL apunta a un sitio con contenido dañino')
+Vote.create(name: 'Phishing',description: 'La URL apunta a un posible sitio de phishing')
+Vote.create(name: 'Piratería',description: 'La URL apunta a un sitio que atenta contra derechos de autor')
+Vote.create(name: 'Inadecuado',description: 'La URL apunta a un sitio de contenidos para adultos')
+Vote.create(name: 'Pendiente',description: 'No sabe que tan segura es la URL')
+Vote.create(name: 'Confiable',description: 'URL confiable debido a uso que se le ha dado')
+Vote.create(name: 'Seguro',description: 'URL segura certificada')
+Vote.create(name: 'Muy Seguro',description: 'URL segura certificada por varias entidades y manejo seguro de datos')
+
+
+
 
 

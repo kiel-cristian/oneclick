@@ -1,7 +1,7 @@
 #!/bin/env ruby
 # encoding: utf-8
 class BookmarksController < ApplicationController
-	before_filter :authenticate_user!, :only=>['create', 'edit' ,'update' ,'delete','new']
+	before_filter :authenticate_user!, :only=>['create', 'edit' ,'update' ,'delete','new','vote']
 
 	def index
 		redirect_to action: 'list'
@@ -28,9 +28,6 @@ class BookmarksController < ApplicationController
     end
 
     def search
-    	p "PARAMS"
-    	p params.inspect
-
   		@categories = Category.get_names()
 		@order = get_order()
 		@crecent = get_crecent()
@@ -108,6 +105,7 @@ class BookmarksController < ApplicationController
 
 	def show
 		@bookmark = Bookmark.find(params[:id])
+		@category = @category_names[@bookmark.categories_id.to_i]
 	end
 
 	def edit
@@ -147,52 +145,105 @@ class BookmarksController < ApplicationController
 		redirect_to b.url
 	end
 
-	def denunce
-		d_id = params[:bookmark]
-		@b_id = params[:id]
-		@faults = Denunce.all
-
-		# "bookmark"=>{"fault"=>"1", "message"=>"El sitio ..."
-
-		if d_id.inspect
-			fault 		= d_id[:fault]
-			message 	= d_id[:message]
-			denunce = BookmarksDenunce.new(bookmarks_id: @b_id,denunces_id: fault,message: message)
-
-			if denunce.save
-				factor = get_factor(fault)
-				points = get_points(fault)
-				div = User.all.count
-
-				bookmark = Bookmark.find(@b_id)
-				bookmark.change_security(factor,points,div)
-				@notice = "Denuncia ingresada con éxito"
-				# denuncia ingresada
+	def vote
+		user_bookmark = UserBookmark.where(users_id: current_user.id, bookmarks_id: params[:id]).first
+		if user_bookmark.presence
+			if user_bookmark.vote < 0
+				prev_points = -1 * user_bookmark.vote.to_i
 			else
-				@alert = "No se pudo ingresar la denuncia"
+				prev_points = user_bookmark.vote.to_i
 			end
-		end
 
-	end
+			d_id = params[:bookmark]
+			@b_id = params[:id]
+			@faults = Vote.all
 
-	def get_factor(denunce_id)
-		if denunce_id == 1
-			return 50
-		elsif denunce_id == 2
-			return 25
-		elsif denunce_id == 3
-			return 20
-		elsif denunce_id == 4
-			return 10
-		elsif denunce_id == 5
-			return 5
+			# "bookmark"=>{"fault"=>"1", "message"=>"El sitio ..."
+
+			if d_id.presence
+				fault 		= d_id[:fault]
+				message 	= d_id[:message]
+
+				if fault.presence and message.presence and message != 'El sitio ...'
+					vote = BookmarksVote.new(bookmarks_id: @b_id,votes_id: fault,message: message)
+
+					if vote.save
+						# factor = get_factor(fault)
+						points = get_points(fault)
+						div = User.all.count
+
+						bookmark = Bookmark.find(@b_id)
+
+						bookmark.change_security(prev_points,1)
+						bookmark.change_security(points,div)
+
+						user_bookmark.update_attributes(vote: points/div)
+
+						@notice = "Denuncia ingresada con éxito"
+
+						redirect_to action: 'list'
+						# denuncia ingresada
+					else
+						@alert = "No se pudo ingresar la denuncia"
+					end
+				else
+					@alert = "Ingrese denuncia y un mensaje"
+				end
+			end
 		else
-			return 1
+			@alert = "Debe agregar este bookmark antes de votar"
 		end
+
 	end
 
-	def get_points(denunce_id)
-		return 1
+	# def get_factor(id)
+	# 	p "DENUNCE ID"
+	# 	p id
+	# 	vote_id = id.to_i
+
+	# 	if vote_id == 1
+	# 		return 50
+	# 	elsif vote_id == 2
+	# 		return 25
+	# 	elsif vote_id == 3
+	# 		return 20
+	# 	elsif vote_id == 4
+	# 		return 10
+	# 	elsif vote_id == 5
+	# 		return 5
+	# 	elsif vote_id == 6
+	# 		return 5
+	# 	elsif vote_id == 7
+	# 		return 10
+	# 	elsif vote_id == 8
+	# 		return 25
+	# 	elsif vote_id == 9
+	# 		return 50
+	# 	end
+	# end
+
+	def get_points(id)
+		vote_id = id.to_i
+
+		if vote_id == 1
+			return -50
+		elsif vote_id == 2
+			return -25
+		elsif vote_id == 3
+			return -20
+		elsif vote_id == 4
+			return -10
+		elsif vote_id == 5
+			return -5
+		elsif vote_id == 6
+			return 5
+		elsif vote_id == 7
+			return 10
+		elsif vote_id == 8
+			return 25
+		elsif vote_id == 9
+			return 50
+		end
 	end
 
 	def get_order

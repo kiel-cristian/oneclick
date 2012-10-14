@@ -10,56 +10,16 @@ class Bookmark < ActiveRecord::Base
   validates_uniqueness_of :url
   validates_format_of :url, :with => URI::regexp(%w(http https)), :message => "debe ser una URL válida"
 
-  # insecure    = (-100..-50)
-  # suspicious  = (-49,-20)
-  # pending     = (-19,19)
-  # confiable   = (20,49)
-  # secure      = (50,100)
-
-  def get_name()
-  	c = Category.where(id: self.categories_id)
-  	p c
-  	if c.presence
-  		return c.first.name
-  	end
-  end
-
-  def get_security_level()
-    invalid     = (-200..-101)
-    insecure    = (-100..-50)
-    suspicious  = (-49..-20)
-    pending     = (-19..19)
-    confiable   = (20..49)
-    secure      = (50..100)
-    if insecure.member? self.invalid
-      return 0
-    elsif insecure.member? self.insecure
-      return 1
-    elsif suspicious.member? self.suspicious
-      return 2
-    elsif pending.member? self.pending
-      return 3
-    elsif confiable.member? self.confiable
-      return 4
-    elsif secure.member? self.secure
-      return 5
+  def change_security(points,div)
+    new_security = self.security + 1.0*(points / div)
+    if new_security > 500
+      new_security = 500
+    elsif new_security < -200
+      new_security = -200
     end
-  end
 
-  def change_security(factor, points,div)
-    current_b = Bookmark.find(self.id)
-    if current_b.presence
-      current_b.change(factor,points,div)
-    end
-  end
-
-  def change(factor,points,div)
-    new_security = self.security + (factor*points / div)
-    if new_security > 100
-      new_security = 100
-    elsif new_security < -100
-      new_security = -100
-    end
+    p "NEW SECURITY"
+    p new_security.inspect
 
     self.update_attributes(security: new_security)
   end

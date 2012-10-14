@@ -1,0 +1,15 @@
+<%= render "layouts/notice" %>
+<%= render "layouts/alert" %>
+
+<h2>Votar bookmarks</h2>
+<%= form_tag :action => 'vote', id: @b_id do%>
+	<p><label for="bookmark_fault">Razón</label>:
+	<%= collection_select(:bookmark,:fault,@faults,:id,:name, :prompt => true) %></p>
+
+	<p><label for="bookmark_message">Mensaje</label>:
+	<%= text_area 'bookmark','message', {value: 'El sitio ...'} %></p>
+
+	<%= submit_tag "Votar",:confirm => '¿Estás seguro de tu opción?' %>
+
+	<%= link_to 'Volver', {action: 'list', controller: 'bookmarks'}, type: 'button2' %>
+<%end %>

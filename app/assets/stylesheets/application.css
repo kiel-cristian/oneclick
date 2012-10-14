@@ -295,7 +295,7 @@ input[type=submit],button[type=submit],a[type*=button]{
 	cursor: pointer;
 }
 
-a[type=button2]{
+a[type*=button2]{
 	padding-top: 12px;
 	padding-left: 19px;
 	float: right;
@@ -304,6 +304,10 @@ a[type=button2]{
 	margin-top: 20px;
 	width: 71px;
 	height: 33px;
+}
+
+a[type=button2_2]{
+	width: 62px;
 }
 
 a[type*=button4]{
@@ -340,11 +344,36 @@ p.errors{
 	font-weight: bold;
 }
 
-p.notice{
+p[class*=notice]{
 	color: #33ff00;
 	font-weight: bold;
 	font-style: italic;
 	font-size: 17px;
+}
+p[class*=notice_]{
+	font-size: 14px;
+	display: inline-block;
+}
+p[class=notice_purple]{
+	color: #663399;
+}
+p[class=notice_orange]{
+	color: #ff9933;
+}
+p[class=notice_yellow]{
+	color: #ffcc00;
+}
+p[class=notice_red]{
+	color: #ff1000;
+}
+p[class=notice_green]{
+	color: #33ff00;
+}
+p[class=notice_blue]{
+	color: #000099;
+}
+p[class=notice_black]{
+	color: #330000;
 }
 
 p.tittle{

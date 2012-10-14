@@ -12,7 +12,7 @@
 		<tr>
 			<td><%= c.get_url() %></td>
 			<td><%= link_to "Ir al detalle", {controller: 'bookmarks', action: 'show', id: c.bookmarks_id} , type: "button" %></td>
-			<td><%= link_to "Denunciar", { controller: 'bookmarks', action: "denunce", id: c.bookmarks_id}, type: "button4" %></td>
+			<td><%= link_to "Votar", { controller: 'bookmarks', action: "vote", id: c.bookmarks_id}, type: "button4" %></td>
 			<td><%= link_to "Eliminar", { action: "delete_bookmark", id: c.bookmarks_id}, :confirm => '¿Estás seguro que deseas borrar el elemento?', type: "button4" %></td>
 		</tr>
 	<% end %>

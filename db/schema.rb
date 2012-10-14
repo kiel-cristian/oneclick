@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121008045451) do
+ActiveRecord::Schema.define(:version => 20121014052637) do
 
   create_table "bookmarks", :force => true do |t|
     t.string   "url",           :null => false
@@ -24,8 +24,8 @@ ActiveRecord::Schema.define(:version => 20121008045451) do
 
   add_index "bookmarks", ["url"], :name => "index_bookmarks_on_url", :unique => true
 
-  create_table "bookmarks_denunces", :force => true do |t|
-    t.integer  "denunces_id",                  :null => false
+  create_table "bookmarks_votes", :force => true do |t|
+    t.integer  "votes_id",                     :null => false
     t.integer  "bookmarks_id",                 :null => false
     t.string   "message",      :default => "", :null => false
     t.datetime "created_at",                   :null => false
@@ -40,20 +40,12 @@ ActiveRecord::Schema.define(:version => 20121008045451) do
 
   add_index "categories", ["name"], :name => "index_categories_on_name", :unique => true
 
-  create_table "denunces", :force => true do |t|
-    t.string   "name",                        :null => false
-    t.string   "description", :default => "", :null => false
-    t.datetime "created_at",                  :null => false
-    t.datetime "updated_at",                  :null => false
-  end
-
-  add_index "denunces", ["name", "description"], :name => "index_denunces_on_name_and_description", :unique => true
-
   create_table "user_bookmarks", :force => true do |t|
     t.integer  "users_id"
     t.integer  "bookmarks_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
+    t.integer  "vote",         :default => 0, :null => false
   end
 
   add_index "user_bookmarks", ["users_id", "bookmarks_id"], :name => "index_user_bookmarks_on_users_id_and_bookmarks_id", :unique => true
@@ -78,5 +70,14 @@ ActiveRecord::Schema.define(:version => 20121008045451) do
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["username"], :name => "index_users_on_username", :unique => true
+
+  create_table "votes", :force => true do |t|
+    t.string   "name",                        :null => false
+    t.string   "description", :default => "", :null => false
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
+  end
+
+  add_index "votes", ["name", "description"], :name => "index_votes_on_name_and_description", :unique => true
 
 end

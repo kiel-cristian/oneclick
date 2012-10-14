@@ -26,7 +26,7 @@ Oneclick::Application.routes.draw do
   # end
 
   match 'bookmarks/increment' => 'bookmarks#increment'
-  match 'bookmarks/denunce' => 'bookmarks#denunce'
+  match 'bookmarks/vote' => 'bookmarks#vote'
   match 'bookmarks/search' => 'bookmarks#search'
 
   match 'users/delete_bookmark' => 'users#delete_bookmark'

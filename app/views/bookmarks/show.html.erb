@@ -1,13 +1,24 @@
+<%= render "layouts/notice" %>
+<%= render "layouts/alert" %>
+
 <% if @bookmark.blank? %>
 	<p><h2>Actualmente no hay bookmarks en el sistema</h2></p>
 <% else %>
 	<p class='tittle'><%= @bookmark.url %></p>
-	<ul>
-	<li><%= link_to "Ir al sitio", {action: 'increment' , id: @bookmark.id} %></li>
-	<li>Popularidad : <%= @bookmark.popularity%></li>
-	<li>Seguridad : <%= @bookmark.security%></li>
-	<li>Categoría : <%= @bookmark.get_name()%></li>
-	</ul>
+	<table>
+	<tr><td>Link: </td><td><%= link_to "Ir al sitio", {action: 'increment' , id: @bookmark.id}, :target => "_blank" %></td></tr>
+	<tr><td>Popularidad :</td><td> <%= @bookmark.popularity %></td></tr>
+	<tr><td>Seguridad :</td><td> <%
+		@security_names.each do |key,value|
+      		if key.member? @bookmark.security.to_i %>
+      			<%= raw value %>
+      			<% break
+      		end
+    	end%>
+    </td></tr>
+	<tr><td>Categoría :</td><td> <%= @category %></td></tr>
+	</table>
 <% end %>
 
+<%= link_to "Votar", { controller: 'bookmarks', action: "vote", id: @bookmark.id}, type: "button2_2" %>
 <%= render "layouts/back" %>
