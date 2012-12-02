@@ -29,7 +29,7 @@ class UsersController < ApplicationController
   def show2
     page = params[:page] or 1
     @user = current_user
-    @bookmarks = UserBookmark.where(users_id: current_user.id).page(page).per(5)
+    @bookmarks = UserBookmark.where("users_id = ?", current_user.id).page(page).per(5)
   end
 
   def show
@@ -38,7 +38,7 @@ class UsersController < ApplicationController
     # p @user.inspect
     page = params[:page] or 1
     @user = current_user
-    @bookmarks = UserBookmark.where(users_id: current_user.id).page(page).per(5)
+    @bookmarks = UserBookmark.where("users_id = ?", current_user.id).page(page).per(5)
     @notice = params[:notice]
 
     # render action: 'info'
@@ -46,7 +46,7 @@ class UsersController < ApplicationController
 
   def delete_bookmark
     b_id = params[:id]
-    bookmark = UserBookmark.where(users_id: current_user.id, bookmarks_id: b_id)
+    bookmark = UserBookmark.where("users_id = ? and bookmarks_id = ?", current_user.id,b_id)
     bookmark.first.delete if bookmark.presence
 
     redirect_to action: 'show', id: current_user.id
@@ -55,7 +55,7 @@ class UsersController < ApplicationController
   def add_bookmark
     b_id = params[:id]
 
-    if Bookmark.find(b_id).presence and UserBookmark.where(users_id: current_user.id,bookmarks_id: b_id).blank?
+    if Bookmark.find(b_id).presence and UserBookmark.where("users_id = ? and bookmarks_id = ?", current_user.id,b_id).blank?
       ub = UserBookmark.new(users_id: current_user.id, bookmarks_id: b_id)
       if ub.save
         redirect_to action: 'show', id: current_user.id, notice: 'Bookmark agregado exitosamente' and return

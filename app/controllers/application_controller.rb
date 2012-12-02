@@ -40,13 +40,13 @@ def set_security_names
   secure      = (50..100)
   very        = (101..500)
 
-  @security_names = { 	invalid		=> "<p class='notice_black'>Inválido" ,
-  						insecure	=> "<p class='notice_red'>Inseguro",
-  						suspicious 	=> "<p class='notice_orange'>Sospechoso",
+  @security_names = { 	invalid		=> "<p class='notice_black'>Inválido</p>" ,
+  						insecure	=> "<p class='notice_red'>Inseguro</p>",
+  						suspicious 	=> "<p class='notice_orange'>Sospechoso</p>",
   						pending		=> "<p class='notice_yellow'>Pendiente</p>",
-  						confiable 	=> "<p class='notice_purple'>Confiable",
-  						secure 		=> "<p class='notice_blue'>Seguro",
-  						very 		=> "<p class='notice_green'>Muy Seguro"}
+  						confiable 	=> "<p class='notice_purple'>Confiable</p>",
+  						secure 		=> "<p class='notice_blue'>Seguro</p>",
+  						very 		=> "<p class='notice_green'>Muy Seguro</p>"}
 end
 
 

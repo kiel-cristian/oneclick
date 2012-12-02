@@ -24,7 +24,9 @@ class BookmarksController < ApplicationController
 			order_option = 'popularity'
 		end
 
-		@bookmarks = Bookmark.order(order_option + ' DESC' ).page(page).per(5)
+		# @bookmarks = Bookmark.order(order_option + ' DESC' ).page(page).per(5)
+		bookm = Bookmark.find(:all, order: order_option + ' DESC')
+		@bookmarks = Kaminari.paginate_array(bookm).page(page).per(5)
     end
 
     def search
@@ -56,9 +58,9 @@ class BookmarksController < ApplicationController
 		end
 
 		if category == true
-			@bookmarks = Bookmark.order(order_option + ' ' + crecent )
+			@bookmarks = Bookmark.find(:all, order: order_option + ' '+ crecent)
 		else
-			@bookmarks = Bookmark.where(categories_id: category).order(order_option + ' ' + crecent)
+			@bookmarks = Bookmark.where("categories_id = ?", category).order(order_option + ' ' + crecent)
 		end
 
     end
@@ -76,7 +78,7 @@ class BookmarksController < ApplicationController
 
 		b = Category.where(id: params[:bookmarks][:category])
 		if  b.presence
-	  		if params[:bookmark][:url].blank? or params[:bookmarks][:category].blank?
+	  		if params[:bookmark][:url].blank? or params[:bookmarks][:category].blank? or params[:bookmark][:url] == "http://"
 	  			@errors = "Debe escribir una URL y seleccionar una categoria."
 	  			# redirect_to action: 'new'
 
@@ -128,7 +130,7 @@ class BookmarksController < ApplicationController
 	end
 
 	def delete
-		UserBookmark.where(bookmarks_id: params[:id]).destroy
+		UserBookmark.where("bookmarks_id = ?", params[:id]).destroy
 		Bookmark.find(params[:id]).destroy
 
 		redirect_to action: 'list'
@@ -152,7 +154,7 @@ class BookmarksController < ApplicationController
 	end
 
 	def vote
-		user_bookmark = UserBookmark.where(users_id: current_user.id, bookmarks_id: params[:id]).first
+		user_bookmark = UserBookmark.where("users_id = ? and bookmarks_id = ?", current_user.id, params[:id]).first
 		if user_bookmark.presence
 			prev_points = -1 * user_bookmark.vote.to_i
 
@@ -200,24 +202,6 @@ class BookmarksController < ApplicationController
 
 	def get_points(id)
 		vote_id = id.to_i
-
-		# Vote.create(name: 'Inválido',description: 'La URL no existe, o dejo de existir')
-		# Vote.create(name: 'Virus',description: 'La URL apunta a un sitio con contenido dañino')
-		# Vote.create(name: 'Phishing',description: 'La URL apunta a un posible sitio de phishing')
-		# Vote.create(name: 'Piratería',description: 'La URL apunta a un sitio que atenta contra derechos de autor')
-		# Vote.create(name: 'Inadecuado',description: 'La URL apunta a un sitio de contenidos para adultos')
-		# Vote.create(name: 'Pendiente',description: 'No sabe que tan segura es la URL')
-		# Vote.create(name: 'Confiable',description: 'URL confiable debido a uso que se le ha dado')
-		# Vote.create(name: 'Seguro',description: 'URL segura certificada')
-		# Vote.create(name: 'Muy Seguro',description: 'URL segura certificada por varias entidades y manejo seguro de datos')
-
-		# invalid     = (-200..-101)
-		# insecure    = (-100..-50)
-		# suspicious  = (-49..-20)
-		# pending     = (-19..19)
-		# confiable   = (20..49)
-		# secure      = (50..100)
-		# very        = (101..500)
 
 		if vote_id == 1
 			return -200
